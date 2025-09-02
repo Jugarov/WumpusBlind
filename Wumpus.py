@@ -11,8 +11,8 @@ WIDTH, HEIGHT = 1000, 720
 FPS = 60
 
 # Tablero axial (hexágonos con punta arriba: "pointy-topped")
-GRID_COLS = 8  # q
-GRID_ROWS = 7  # r
+GRID_COLS = 9  # q
+GRID_ROWS = 8  # r
 HEX_SIZE = 42  # radio del hex (distancia del centro a un vértice)
 MARGIN_TOP = 80
 MARGIN_LEFT = 80
@@ -24,10 +24,10 @@ WUMPUS_KILL_REWARD = 1000
 BAT_KILL_REWARD = 100
 
 # Cantidades de entidades
-NUM_WUMPUS = 1
-NUM_PITS = 1
-NUM_BATS = 1
-NUM_GOLD = 1
+NUM_WUMPUS = 2
+NUM_PITS = 2
+NUM_BATS = 2
+NUM_GOLD = 2
 NUM_ARROWS = (NUM_WUMPUS + NUM_BATS) * 2
 
 # Colores
@@ -183,6 +183,7 @@ class Player:
         if ent == ENTITY_WUMPUS or ent == ENTITY_PIT:
             self.alive = False
         elif ent == ENTITY_BAT:
+            self.dir_idx = random.randrange(6)
             dest = board.random_empty_cell()
             if dest is not None:
                 self.q, self.r = dest
