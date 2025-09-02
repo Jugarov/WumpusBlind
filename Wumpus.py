@@ -342,26 +342,22 @@ def main():
         stench, breeze = compute_hints(board)
 
         # Dibujo del tablero
-        player_cell = (player.q, player.r)
-        for r in range(GRID_ROWS):
-            for q in range(GRID_COLS):
-                center = axial_to_pixel(q, r, HEX_SIZE)
-                draw_hex(screen, center, HEX_SIZE, HEX_FILL, HEX_BORDER)
+        center = axial_to_pixel(player.q, player.r, HEX_SIZE)
+        draw_hex(screen, center, HEX_SIZE, HEX_FILL, HEX_BORDER)
 
-                # Pistas visuales en casillas adyacentes
-                if (q, r) in stench:
-                    draw_stench(screen, center, HEX_SIZE)
-                if (q, r) in breeze:
-                    draw_breeze(screen, center, HEX_SIZE)
+        # Pistas (solo en la celda actual)
+        if (player.q, player.r) in stench:
+            draw_stench(screen, center, HEX_SIZE)
+        if (player.q, player.r) in breeze:
+            draw_breeze(screen, center, HEX_SIZE)
 
-                # Entidad (opcional: siempre visible para debug/juego casual)
-                ent = board.entity_at(q, r)
-                if ent != ENTITY_NONE:
-                    draw_entity_icon(screen, center, HEX_SIZE, ent)
+        # Mostrar entidad si está en la casilla actual
+        ent = board.entity_at(player.q, player.r)
+        if ent != ENTITY_NONE:
+            draw_entity_icon(screen, center, HEX_SIZE, ent)
 
-                # Jugador
-                if (q, r) == player_cell:
-                    draw_player(screen, center, HEX_SIZE, player.dir_idx)
+        # Dibujar jugador
+        draw_player(screen, center, HEX_SIZE, player.dir_idx)
 
         # Panel superior
         pygame.draw.rect(screen, (26, 28, 34), (0, 0, WIDTH, MARGIN_TOP - 10))
